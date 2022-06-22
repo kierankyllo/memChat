@@ -10,7 +10,6 @@ class ChatLogic; // forward declaration
 class ChatBot
 {
 private:
-    // test comment
     // data handles (owned)
     wxBitmap *_image; // avatar image
 
