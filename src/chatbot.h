@@ -30,7 +30,17 @@ public:
     //// STUDENT CODE
     ////
 
-    //RO5 definitions
+    //ChatBot copy constructor
+    ChatBot(const ChatBot &rhs);
+
+    //ChatBot copy assignment operator
+    ChatBot &operator=(const ChatBot &rhs);
+    
+    //ChatBot move constructor
+    ChatBot(ChatBot &rhs);
+    
+    //ChatBot move assignment operator
+    ChatBot &operator=(ChatBot &&rhs);
 
     ////
     //// EOF STUDENT CODE
