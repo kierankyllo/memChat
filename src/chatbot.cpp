@@ -17,6 +17,8 @@ ChatBot::ChatBot()
     _rootNode = nullptr;
 }
 
+// test
+
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
@@ -27,14 +29,14 @@ ChatBot::ChatBot(std::string filename)
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 
-    //output to terminal
+    // output to terminal
     std::cout << "ChatBot Constructor\n";
 }
 
 ChatBot::~ChatBot()
 {
     // deallocate heap memory BUG
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
         _image = NULL;
@@ -45,89 +47,89 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
-//ChatBot copy constructor
-ChatBot::ChatBot(const ChatBot &rhs){
-
-    //owned
+// ChatBot copy constructor
+ChatBot::ChatBot(const ChatBot &rhs)
+{
+    // owned
     _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
-    
-    //unowned
-    _image = new wxBitmap(*rhs._image);
-    
-    //terminal output
-    std::cout << "ChatBot COPY Constructor\n";
 
+    // unowned
+    _image = new wxBitmap(*rhs._image);
+
+    // terminal output
+    std::cout << "ChatBot COPY Constructor\n";
 }
 
-//ChatBot copy assignment operator
-ChatBot &ChatBot::operator=(const ChatBot &rhs) {
+// ChatBot copy assignment operator
+ChatBot &ChatBot::operator=(const ChatBot &rhs)
+{
+    // dupe check
+    if (this == &rhs)
+        return *this;
 
-    //dupe check
-    if (this == &rhs) return *this;
-
-    //owned
+    // owned
     _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
-    
-    //unowned
+
+    // unowned
     _image = new wxBitmap(*rhs._image);
-  
-    //terminal output
+
+    // terminal output
     std::cout << "ChatBot COPY Assignment\n";
 
     return *this;
 }
 
-//ChatBot move constructor
-ChatBot::ChatBot(ChatBot &rhs){
-    
-    //owned
+// ChatBot move constructor
+ChatBot::ChatBot(ChatBot &rhs)
+{
+    // owned
     _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
 
-    //unowned
+    // unowned
     _image = new wxBitmap(*rhs._image);
-    
-    //nullify
+
+    // nullify
     rhs._currentNode = nullptr;
     rhs._chatLogic = nullptr;
     rhs._rootNode = nullptr;
     rhs._image = NULL;
 
-    //terminal output
+    // terminal output
     std::cout << "ChatBot MOVE Constructor\n";
 }
 
-//ChatBot move assignment operator
-ChatBot &ChatBot::operator=(ChatBot &&rhs){
-    
-    //dupecheck
-    if (this == &rhs) return *this;
-    
-    //owned
+// ChatBot move assignment operator
+ChatBot &ChatBot::operator=(ChatBot &&rhs)
+{
+    // dupecheck
+    if (this == &rhs)
+        return *this;
+
+    // owned
     _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
 
-    //unowned
+    // unowned
     _image = new wxBitmap(*rhs._image);
 
-    //nullify
+    // nullify
     rhs._currentNode = nullptr;
     rhs._chatLogic = nullptr;
     rhs._rootNode = nullptr;
     rhs._image = NULL;
 
-    //terminal output
+    // terminal output
     std::cout << "ChatBot MOVE Assignment\n";
 
     return *this;
 }
-
 
 ////
 //// EOF STUDENT CODE
@@ -153,7 +155,8 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     if (levDists.size() > 0)
     {
         // sort in ascending order of Levenshtein distance (best fit is at the top)
-        std::sort(levDists.begin(), levDists.end(), [](const EdgeDist &a, const EdgeDist &b) { return a.second < b.second; });
+        std::sort(levDists.begin(), levDists.end(), [](const EdgeDist &a, const EdgeDist &b)
+                  { return a.second < b.second; });
         newNode = levDists.at(0).first->GetChildNode(); // after sorting the best edge is at first position
     }
     else
@@ -168,7 +171,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
 
 void ChatBot::SetCurrentNode(GraphNode *node)
 {
-    //update handle
+    // update handle
     _chatLogic->SetChatbotHandle(this);
 
     // update pointer to current node

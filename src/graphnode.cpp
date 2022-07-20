@@ -8,9 +8,7 @@ GraphNode::GraphNode(int id)
 
 GraphNode::~GraphNode()
 {
-
     //_chatBot has its own destructor
-
 }
 
 void GraphNode::AddToken(std::string token)
@@ -30,6 +28,7 @@ void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 
 //// STUDENT CODE
 ////
+
 void GraphNode::MoveChatbotHere(ChatBot chatbot)
 {
     _chatBot = std::move(chatbot);
@@ -39,8 +38,8 @@ void GraphNode::MoveChatbotHere(ChatBot chatbot)
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
     newNode->MoveChatbotHere(std::move(_chatBot));
-    //_chatBot = nullptr; // invalidate pointer at source
 }
+
 ////
 //// EOF STUDENT CODE
 
