@@ -30,6 +30,8 @@ public:
     //// STUDENT CODE
     ////
 
+    //RO5 definitions
+
     ////
     //// EOF STUDENT CODE
 

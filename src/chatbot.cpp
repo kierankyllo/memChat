@@ -34,7 +34,7 @@ ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
 
-    // deallocate heap memory
+    // deallocate heap memory BUG
     if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
@@ -44,6 +44,14 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+
+//ChatBot copy constructor
+
+//ChatBot copy assignment operator
+
+//ChatBot move constructor
+
+//ChatBot move assignment operator
 
 ////
 //// EOF STUDENT CODE
