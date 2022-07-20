@@ -20,26 +20,26 @@ ChatBot::ChatBot()
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << "ChatBot Constructor" << std::endl;
-    
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+
+    //output to terminal
+    std::cout << "ChatBot Constructor\n";
 }
 
 ChatBot::~ChatBot()
 {
-    std::cout << "ChatBot Destructor" << std::endl;
-
     // deallocate heap memory BUG
     if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
         _image = NULL;
     }
+    std::cout << "ChatBot Destructor\n";
 }
 
 //// STUDENT CODE
@@ -49,10 +49,13 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &rhs){
 
     //owned
+    _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
+    
     //unowned
     _image = new wxBitmap(*rhs._image);
+    
     //terminal output
     std::cout << "ChatBot COPY Constructor\n";
 
@@ -61,11 +64,17 @@ ChatBot::ChatBot(const ChatBot &rhs){
 //ChatBot copy assignment operator
 ChatBot &ChatBot::operator=(const ChatBot &rhs) {
 
+    //dupe check
+    if (this == &rhs) return *this;
+
     //owned
+    _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
     _rootNode = rhs._rootNode;
+    
     //unowned
     _image = new wxBitmap(*rhs._image);
+  
     //terminal output
     std::cout << "ChatBot COPY Assignment\n";
 
@@ -76,13 +85,19 @@ ChatBot &ChatBot::operator=(const ChatBot &rhs) {
 ChatBot::ChatBot(ChatBot &rhs){
     
     //owned
+    _currentNode = rhs._currentNode;
     _chatLogic = rhs._chatLogic;
-    rhs._chatLogic = nullptr;
     _rootNode = rhs._rootNode;
-    rhs._rootNode = nullptr;
+
     //unowned
-    _image = rhs._image;
-    rhs._image  = nullptr;
+    _image = new wxBitmap(*rhs._image);
+    
+    //nullify
+    rhs._currentNode = nullptr;
+    rhs._chatLogic = nullptr;
+    rhs._rootNode = nullptr;
+    rhs._image = NULL;
+
     //terminal output
     std::cout << "ChatBot MOVE Constructor\n";
 }
@@ -90,12 +105,23 @@ ChatBot::ChatBot(ChatBot &rhs){
 //ChatBot move assignment operator
 ChatBot &ChatBot::operator=(ChatBot &&rhs){
     
+    //dupecheck
+    if (this == &rhs) return *this;
+    
     //owned
-    _chatLogic = std::move(rhs._chatLogic);
-    _rootNode = std::move(rhs._rootNode);
+    _currentNode = rhs._currentNode;
+    _chatLogic = rhs._chatLogic;
+    _rootNode = rhs._rootNode;
+
     //unowned
-    delete _image;
-    rhs._image  = nullptr;
+    _image = new wxBitmap(*rhs._image);
+
+    //nullify
+    rhs._currentNode = nullptr;
+    rhs._chatLogic = nullptr;
+    rhs._rootNode = nullptr;
+    rhs._image = NULL;
+
     //terminal output
     std::cout << "ChatBot MOVE Assignment\n";
 
@@ -142,6 +168,9 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
 
 void ChatBot::SetCurrentNode(GraphNode *node)
 {
+    //update handle
+    _chatLogic->SetChatbotHandle(this);
+
     // update pointer to current node
     _currentNode = node;
 
