@@ -1,1 +1,5 @@
 .github/**
+build/
+CMakeCache.txt
+.vscode
+.gitignore
